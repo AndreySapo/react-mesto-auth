@@ -3,6 +3,7 @@
   margin: 0 auto;
   color: var(--white-color);
   height: 100%;
+  max-width: 880px;
   width: 100%;
   box-sizing: border-box;
 }
