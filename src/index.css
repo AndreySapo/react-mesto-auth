@@ -1,13 +1,74 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+@import url(./variables/variables.css);
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Стили блока page */
+@import url(./blocks/page/page.css);
+
+/* Стили блока header */
+@import url(./blocks/header/header.css);
+@import url(./blocks/header/__logo/header__logo.css);
+
+/* Стили блока container */
+@import url(./blocks/container/container.css);
+
+/* Стили блока profile */
+@import url(./blocks/profile/profile.css);
+@import url(./blocks/profile/__main-container/profile__main-container.css);
+@import url(./blocks/profile/__avatar/profile__avatar.css);
+@import url(./blocks/profile/__avatar-img/profile__avatar-img.css);
+@import url(./blocks/profile/__avatar-edit-button/profile__avatar-edit-button.css);
+@import url(./blocks/profile/__info/profile__info.css);
+@import url(./blocks/profile/__final-container/profile__final-container.css);
+@import url(./blocks/profile/__name/profile__name.css);
+@import url(./blocks/profile/__edit-button/profile__edit-button.css);
+@import url(./blocks/profile/__job/profile__job.css);
+@import url(./blocks/profile/__add-button/profile__add-button.css);
+
+/* Стили блока elements и element */
+@import url(./blocks/elements/elements.css);
+@import url(./blocks/elements/__grid/elements__grid.css);
+@import url(./blocks/element/element.css);
+@import url(./blocks/element/__button-zoom/element__button-zoom.css);
+@import url(./blocks/element/__image/element__image.css);
+@import url(./blocks/element/__group/element__group.css);
+@import url(./blocks/element/__image/element__image.css);
+@import url(./blocks/element/__title/element__title.css);
+@import url(./blocks/element/__like-group/element__like-group.css);
+@import url(./blocks/element/__button-like/element__button-like.css);
+@import url(./blocks/element/__counter-like/element__counter-like.css);
+@import url(./blocks/element/__button-like/_active/element__button-like_active.css);
+@import url(./blocks/element/__button-trash/element__button-trash.css);
+
+/* Стили блока footer */
+@import url(./blocks/footer/footer.css);
+@import url(./blocks/footer/__text/footer__text.css);
+
+/* Стили блока popup */
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__form/popup__form.css);
+@import url(./blocks/popup/__header/popup__header.css);
+@import url(./blocks/popup/__input/popup__input.css);
+@import url(./blocks/popup/__input/_type/popup__input_type_error.css);
+@import url(./blocks/popup/__input-error/popup__input-error.css);
+@import url(./blocks/popup/__input-error/_active/popup__input-error_active.css);
+@import url(./blocks/popup/__button-save/popup__button-save.css);
+@import url(./blocks/popup/__button-save/_inactive/popup__button-save_inactive.css);
+@import url(./blocks/popup/__button-close/popup__button-close.css);
+
+/* Стили блока confirm-popup */
+@import url(./blocks/confirm-popup/__header/confirm-popup__header.css);
+@import url(./blocks/confirm-popup/__button-save/confirm-popup__button-save.css);
+
+/* Стили блока img-zoom*/
+@import url(./blocks/img-zoom/img-zoom.css);
+@import url(./blocks/img-zoom/__container/img-zoom__container.css);
+@import url(./blocks/img-zoom/__img/img-zoom__img.css);
+@import url(./blocks/img-zoom/__caption/img-zoom__caption.css);
+@import url(./blocks/img-zoom/__button-close/img-zoom__button-close.css);
+
+body {
+  background-color: var(--bg-color);
 }
