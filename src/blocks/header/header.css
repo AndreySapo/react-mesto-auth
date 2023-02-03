@@ -13,38 +13,3 @@
     padding-bottom: 26px;
   }
 }
-
-.header__link {
-  font-weight: 400;
-  font-size: 18px;
-  line-height: calc((22/18)*100%);
-  color: #FFFFFF;
-  text-decoration: none;
-  transition: all .25s;
-}
-
-.header__link:hover {
-  opacity: .6;
-}
-
-.header__block {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-}
-
-.header__email {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: calc((22/18)*100%);
-  color: #FFFFFF;
-}
-
-.header__exit {
-  font-weight: 400;
-  font-size: 18px;
-  line-height: calc((22/18)*100%);
-  text-decoration: none;
-  color: #A9A9A9;
-}
