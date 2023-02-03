@@ -91,6 +91,11 @@
 @import url(./blocks/register/__button/register__button.css);
 @import url(./blocks/register/__link/register__link.css);
 
+/* Стили блока infotooltip */
+@import url(./blocks/infotooltip/__elements/infotooltip__elements.css);
+@import url(./blocks/infotooltip/__img/infotooltip__img.css);
+@import url(./blocks/infotooltip/__text/infotooltip__text.css);
+
 body {
   background-color: var(--bg-color);
 }
