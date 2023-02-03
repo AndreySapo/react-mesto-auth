@@ -1,4 +1,5 @@
 import React from 'react';
+// import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -124,6 +125,17 @@ function App() {
         console.log(err); // выведем ошибку в консоль
       });
   }, [])
+
+  // Проектная работа 12
+  // _________________________________________________________________________________________________________
+
+    // const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+
+
+
+  // _________________________________________________________________________________________________________
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
