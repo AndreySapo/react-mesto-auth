@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Login ({ title, buttonText, onSignIn }) {
+function Login ({ title, buttonText, onSubmit }) {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -17,7 +17,7 @@ function Login ({ title, buttonText, onSignIn }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    onSignIn({
+    onSubmit({
       email,
       password
     })

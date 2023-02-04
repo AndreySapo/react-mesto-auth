@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
@@ -8,6 +8,9 @@ import EditAvatarPopup from './EditAvatarPopup.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
+import Login from './Login.js';
+import Register from './Register.js';
+import ProtectedRouteElement from './ProtectedRoute.js';
 import { exampleAPI } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import '../index.css';
@@ -129,11 +132,15 @@ function App() {
   // Проектная работа 12
   // _________________________________________________________________________________________________________
 
-    // const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = React.useState(false);
-    const [email, setEmail] = React.useState('');
+  // const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [email, setEmail] = React.useState('');
 
+  function loginSubmit({ email, password }) {
+    // localStorage.getItem('jwt') ? console.log(`jwt exist`) : console.log(`jwt is null`)
 
+    
+  }
 
   // _________________________________________________________________________________________________________
 
@@ -141,17 +148,39 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
 
-        <Header />
+        <Header loggedIn={loggedIn} email={email} />
 
-        <Main
-          onEditAvatar={handleEditAvatarClick}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
+        <Routes>
+          <Route path="/sign-up" element={
+            <Register
+              title='Регистрация'
+              buttonText='Зарегистрироваться'
+
+            />
+          }
+          />
+          <Route path="/sign-in" element={
+            <Login
+              title='Вход'
+              buttonText='Войти'
+              onSubmit={loginSubmit}
+            />} />
+          <Route path='/'
+            element={
+              <ProtectedRouteElement
+                loggedIn={loggedIn}
+                element={Main}
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+                cards={cards}
+              />
+            }
+          />
+        </Routes>
 
         <Footer />
 
