@@ -1,11 +1,11 @@
 import logo from '../images/logo_white.svg';
 import { Route, Routes, Link } from 'react-router-dom';
 
-function Header({ loggedIn, email }) {
+function Header({ email, exitClick }) {
   return (
     <header className="header">
       <img src={logo} alt="Логотип" className="header__logo" />
-      {/* <Routes>
+      <Routes>
         <Route path='/sign-in' element={
           <Link to='/sign-up' className='header__link'>Зарегистрироваться</Link>
         } />
@@ -15,10 +15,10 @@ function Header({ loggedIn, email }) {
         <Route path='/' element={
           <div className='header__block'>
             <p className='header__email'>{email}</p>
-            <Link to='sign-in' className='header__exit'>Выйти</Link>
+            <Link to='sign-in' className='header__exit' onClick={exitClick}>Выйти</Link>
           </div>
         } />
-      </Routes> */}
+      </Routes>
     </header>
   )
 }

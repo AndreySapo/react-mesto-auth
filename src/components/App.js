@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
 import Main from './Main.js';
@@ -12,6 +12,7 @@ import Login from './Login.js';
 import Register from './Register.js';
 import ProtectedRouteElement from './ProtectedRoute.js';
 import { exampleAPI } from '../utils/Api.js';
+import { exampleAuth } from '../utils/Auth.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import '../index.css';
 
@@ -132,14 +133,49 @@ function App() {
   // Проектная работа 12
   // _________________________________________________________________________________________________________
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
 
-  function loginSubmit({ email, password }) {
-    // localStorage.getItem('jwt') ? console.log(`jwt exist`) : console.log(`jwt is null`)
+  useEffect(() => {
+    // При открытии страницы проверяем токен. если есть - перенаправляем в /
+    const jwt = { token: localStorage.getItem('jwt') };
 
-    
+    if (localStorage.getItem('jwt')) {
+      exampleAuth.checkToken(jwt)
+        .then(({ data }) => {
+          setEmail(data.email);
+          setLoggedIn(true);
+          navigate('/', {replace: true})
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        })
+    }
+  }, [])
+
+  // функция для логина
+  // получаем лог/пасс с формы, передаем в апи, при успешном ответе сохраняем
+  // токен, устанавливаем нужные значения в константы
+  function loginSubmit({ email, password }) {
+
+    exampleAuth.signIn({ email, password })
+      .then(({ token }) => {
+        localStorage.setItem('jwt', token);
+        navigate('/', { replace: true });
+        setLoggedIn(true);
+        setEmail(email);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      })
+
+  }
+
+  function exitClick () {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    navigate('/signin', {replace: true});
   }
 
   // _________________________________________________________________________________________________________
@@ -148,14 +184,13 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
 
-        <Header loggedIn={loggedIn} email={email} />
+        <Header email={email} exitClick={exitClick}/>
 
         <Routes>
           <Route path="/sign-up" element={
             <Register
               title='Регистрация'
               buttonText='Зарегистрироваться'
-
             />
           }
           />
