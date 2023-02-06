@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Register({ title, buttonText, onSignUp }) {
+function Register({ title, buttonText, registerSubmit }) {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -17,7 +17,7 @@ function Register({ title, buttonText, onSignUp }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    onSignUp({
+    registerSubmit({
       email,
       password
     })

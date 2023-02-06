@@ -11,6 +11,7 @@ import AddPlacePopup from './AddPlacePopup.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import ProtectedRouteElement from './ProtectedRoute.js';
+import InfoToolTip from './InfoToolTip.js';
 import { exampleAPI } from '../utils/Api.js';
 import { exampleAuth } from '../utils/Auth.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -27,6 +28,13 @@ function App() {
     avatar: "../images/Avatar.png",
     name: "Жак Ив-Кусто",
   })
+
+  // ПР12
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
+  const [registrationState, setRegistrationState] = React.useState(false);
 
   // обработчики кнопок в Main
   function handleEditAvatarClick() {
@@ -50,6 +58,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ name: '', link: '' });
+    setIsInfoToolTipOpen(false);
   }
 
   function handleCardLike(card) {
@@ -114,46 +123,7 @@ function App() {
 
   }
 
-  React.useEffect(() => {
-    Promise.all(
-      [
-        exampleAPI.getUser(),
-        exampleAPI.getCardList()
-      ]
-    )
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, [])
-
-  // Проектная работа 12
-  // _________________________________________________________________________________________________________
-
-  const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [email, setEmail] = React.useState('');
-
-  useEffect(() => {
-    // При открытии страницы проверяем токен. если есть - перенаправляем в /
-    const jwt = { token: localStorage.getItem('jwt') };
-
-    if (localStorage.getItem('jwt')) {
-      exampleAuth.checkToken(jwt)
-        .then(({ data }) => {
-          setEmail(data.email);
-          setLoggedIn(true);
-          navigate('/', {replace: true})
-        })
-        .catch((err) => {
-          console.log(err); // выведем ошибку в консоль
-        })
-    }
-  }, [])
-
+  // ПР12
   // функция для логина
   // получаем лог/пасс с формы, передаем в апи, при успешном ответе сохраняем
   // токен, устанавливаем нужные значения в константы
@@ -172,25 +142,76 @@ function App() {
 
   }
 
-  function exitClick () {
+  // функция выхода из аккаунта
+  // удаляем jwt, устанавливаем значение в константу, перекидываем на страницу входа
+  function exitClick() {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    navigate('/signin', {replace: true});
+    navigate('/signin', { replace: true });
   }
 
-  // _________________________________________________________________________________________________________
+  // функция регистрации
+  // делаем запрос. в случае успеха подказываем один попап, в случае фейла - другой попап
+  function registerSubmit({ email, password }) {
+    exampleAuth.signUp({ email, password })
+      .then(() => {
+        setIsInfoToolTipOpen(true);
+        setRegistrationState(true);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+        setIsInfoToolTipOpen(true);
+        setRegistrationState(false);
+      })
+  }
+
+  React.useEffect(() => {
+    Promise.all(
+      [
+        exampleAPI.getUser(),
+        exampleAPI.getCardList()
+      ]
+    )
+      .then(([userData, cards]) => {
+        setCurrentUser(userData);
+        setCards(cards);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  }, []);
+
+  // ПР12
+
+  React.useEffect(() => {
+    // При открытии страницы проверяем токен. если есть - перенаправляем в /
+    const jwt = { token: localStorage.getItem('jwt') };
+
+    if (localStorage.getItem('jwt')) {
+      exampleAuth.checkToken(jwt)
+        .then(({ data }) => {
+          setEmail(data.email);
+          setLoggedIn(true);
+          navigate('/', { replace: true })
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        })
+    }
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
 
-        <Header email={email} exitClick={exitClick}/>
+        <Header email={email} exitClick={exitClick} />
 
         <Routes>
           <Route path="/sign-up" element={
             <Register
               title='Регистрация'
               buttonText='Зарегистрироваться'
+              registerSubmit={registerSubmit}
             />
           }
           />
@@ -246,6 +267,12 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={handleCloseAllPopups}
+        />
+
+        <InfoToolTip
+          isOpen={isInfoToolTipOpen}
+          onClose={handleCloseAllPopups}
+          state={registrationState}
         />
       </div>
     </CurrentUserContext.Provider>
