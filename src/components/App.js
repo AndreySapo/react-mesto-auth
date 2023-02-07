@@ -35,6 +35,7 @@ function App() {
   const [email, setEmail] = React.useState('');
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
   const [registrationState, setRegistrationState] = React.useState(false);
+  const [infoToolTipText, setInfoToolTipText] = React.useState('');
 
   // обработчики кнопок в Main
   function handleEditAvatarClick() {
@@ -157,10 +158,12 @@ function App() {
       .then(() => {
         setIsInfoToolTipOpen(true);
         setRegistrationState(true);
+        setInfoToolTipText('Вы успешно зарегистрировались!');
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
         setIsInfoToolTipOpen(true);
+        setInfoToolTipText('Что-то пошло не так! Попробуйте ещё раз.');
         setRegistrationState(false);
       })
   }
@@ -273,6 +276,7 @@ function App() {
           isOpen={isInfoToolTipOpen}
           onClose={handleCloseAllPopups}
           state={registrationState}
+          text={infoToolTipText}
         />
       </div>
     </CurrentUserContext.Provider>
