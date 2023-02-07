@@ -139,6 +139,8 @@ function App() {
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
+        setIsInfoToolTipOpen(true);
+        setInfoToolTipText('Что-то пошло не так! Попробуйте ещё раз.');
       })
 
   }
