@@ -169,20 +169,22 @@ function App() {
   }
 
   React.useEffect(() => {
-    Promise.all(
-      [
-        exampleAPI.getUser(),
-        exampleAPI.getCardList()
-      ]
-    )
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, []);
+    if (loggedIn) {
+      Promise.all(
+        [
+          exampleAPI.getUser(),
+          exampleAPI.getCardList()
+        ]
+      )
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
+    }
+  }, [loggedIn]);
 
   // ПР12
 
